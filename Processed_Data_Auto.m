@@ -23,7 +23,7 @@ while cnt <= length1
 this_dir_name = string(all_dir_names{cnt});
 % argument settings
 name = this_dir_name; % 处理完毕后的数据所放的文件夹名
-data_dir = '/Users/guanqianyun/Downloads/' + name + '/WAV'; % data dir
+data_dir = '/Users/Downloads/' + name + '/WAV'; % data dir
 
 % 获取音频文件个数
 Files = dir(fullfile(data_dir,'SingleWav*'));  
@@ -33,7 +33,7 @@ sample_num = size1(2); % sample number
 fprintf('Dir %s Start!\n', name);
 % sample_num = 20; % sample number
 
-result_root_dir =  '/Users/guanqianyun/Desktop/Processed_Data/'; % result dir
+result_root_dir =  '/Users/Desktop/Processed_Data/'; % result dir
 epoch_nums = 15; % 循环的次数
 epoch_steps = 0.02 ; % 每次循环增加vowel_end 的大小
 
