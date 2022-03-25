@@ -559,7 +559,7 @@ cycle_times = 0; % flag
             
             if (handle_arr(13) == 1)
                 % Store ESD-PCA data
-                filename0 = '/Users/guanqianyun/Desktop/Processed_Data/GZ/ESD_pca';
+                filename0 = '/Users/Desktop/Processed_Data/GZ/ESD_pca';
                 filename2 = '.csv';
                 filename = sprintf('%s%d%s',filename0, Data_number,filename2);
                 fid = fopen(filename, 'w');
