@@ -8,20 +8,20 @@ vowel_end = 0.24; % line 104f
 deleteseg_num = 0; % 0 1 2 3
 
 % Load wav file.
-path_voice2 = '/Users/guanqianyun/Downloads/CollectedData_noise/WAV/SingleWav';
+path_voice2 = '/Users/Downloads/CollectedData_noise/WAV/SingleWav';
 path_voice3 = '.wav';
 path_voice = sprintf('%s%d%s',path_voice2, times_number, path_voice3);
 % path_voice = '/Users/mengxue/Downloads/getWav124.wav';
 [Rt, Fs] = audioread(path_voice);
 
 handle_arr = [
-    1 % ÉùÒôµÄÔ­Ê¼ĞÅºÅ¡£1
-    1 % ÂË²¨Ö®ºóµÄĞÅºÅ¡£2
-    1 % Ï£¶û²®ÌØÖ®ºóµÄ°üÂç¡£3
-    0 % ÄÜÁ¿Æ×¡£4
-    1 % MFcc¡£5
-    1 % Òô»ùÖÜÆÚ¼ì²â¡£6
-    1 % ´¦ÀíÆğ·üÊı¾İ¡£7
+    1 % å£°éŸ³çš„åŸå§‹ä¿¡å·ã€‚1
+    1 % æ»¤æ³¢ä¹‹åçš„ä¿¡å·ã€‚2
+    1 % å¸Œå°”ä¼¯ç‰¹ä¹‹åçš„åŒ…ç»œã€‚3
+    0 % èƒ½é‡è°±ã€‚4
+    1 % MFccã€‚5
+    1 % éŸ³åŸºå‘¨æœŸæ£€æµ‹ã€‚6
+    1 % å¤„ç†èµ·ä¼æ•°æ®ã€‚7
     1 % xcorr 8 
     1 % crosscor 9
     1 % Store Data. 10
@@ -30,7 +30,7 @@ handle_arr = [
 ];
 
 handle_esd = [
-    1 % ·ÖÖ¡ ÇóÊ±¼ä
+    1 % åˆ†å¸§ æ±‚æ—¶é—´
     1 % BackGround Remove
     1 % EWT
 ];
@@ -45,64 +45,64 @@ time = length(Rt)/Fs;
 xtic = 0 : 1/Fs :time - 1/Fs;
 [b,a]=butter(1,[200/Fs 1200/Fs],'bandpass');
 Rt=filter(b,a,Rt) * 100;
-Rt=Rt-mean(Rt);    % ÏûÈ¥Ö±Á÷·ÖÁ¿
-Rt=Rt/max(abs(Rt));  % ·ùÖµ¹éÒ»»¯
+Rt=Rt-mean(Rt);    % æ¶ˆå»ç›´æµåˆ†é‡
+Rt=Rt/max(abs(Rt));  % å¹…å€¼å½’ä¸€åŒ–
 % Draw signals
 if (handle_arr(1) == 1)
     figure(1);
     plot(xtic, Rt);
-    title("ÉùÒôµÄ¿ÉÌı¼ûĞÅºÅ");
+    title("å£°éŸ³çš„å¯å¬è§ä¿¡å·");
 end
 %Frequency Features
-N=length(Rt); %¼ÆËãÔ­ĞÅºÅµÄ³¤¶È
-f=Fs*(0:N-1)/N;  %ÆµÂÊ·Ö²¼
-y=fft(Rt);  %¶ÔÔ­Ê±ÓòĞÅºÅx½øĞĞfft£¬µÃµ½ÆµÓòĞÅºÅy
+N=length(Rt); %è®¡ç®—åŸä¿¡å·çš„é•¿åº¦
+f=Fs*(0:N-1)/N;  %é¢‘ç‡åˆ†å¸ƒ
+y=fft(Rt);  %å¯¹åŸæ—¶åŸŸä¿¡å·xè¿›è¡Œfftï¼Œå¾—åˆ°é¢‘åŸŸä¿¡å·y
 if (handle_arr(4) == 1)
     Energy = abs(y) .* abs(y);
     figure(2)
-    plot(xtic,Energy)   %»æÖÆÂË²¨Ö®ºóµÄÊ±ÓòĞÅºÅx1
-    title('ĞÅºÅµÄÄÜÁ¿Æ×')
+    plot(xtic,Energy)   %ç»˜åˆ¶æ»¤æ³¢ä¹‹åçš„æ—¶åŸŸä¿¡å·x1
+    title('ä¿¡å·çš„èƒ½é‡è°±')
 end
-%Éè¼ÆÂË²¨Æ÷FIRÂË²¨Æ÷
-b=fir1(8,[200/Fs 1200/Fs]);  %Éè¼Æ´øÍ¨ÂË²¨Æ÷ 48
-c=freqz(b,1,N);   %ÆµÂÊÌØĞÔ
+%è®¾è®¡æ»¤æ³¢å™¨FIRæ»¤æ³¢å™¨
+b=fir1(8,[200/Fs 1200/Fs]);  %è®¾è®¡å¸¦é€šæ»¤æ³¢å™¨ 48
+c=freqz(b,1,N);   %é¢‘ç‡ç‰¹æ€§
 y1 = y.*c;
 x1=ifft(y1);
 if (handle_arr(2) == 1)
 %     figure(3);
-%     plot(xtic,real(x1))   %»æÖÆÂË²¨Ö®ºóµÄÊ±ÓòĞÅºÅx1
-%     title('ÂË²¨Ö®ºóµÄÊ±ÓòĞÅºÅ')
+%     plot(xtic,real(x1))   %ç»˜åˆ¶æ»¤æ³¢ä¹‹åçš„æ—¶åŸŸä¿¡å·x1
+%     title('æ»¤æ³¢ä¹‹åçš„æ—¶åŸŸä¿¡å·')
 end
-%hilbert±ä»»£¬¶Ôx1Çó°üÂçÏß
-x2=hilbert(real(x1));  %x1µÄÏ£¶û²®ÌØ±ä»»x2 real(x1)
-x3=abs(x2);      %x2È¡Ä££¬µÃµ½x3
+%hilbertå˜æ¢ï¼Œå¯¹x1æ±‚åŒ…ç»œçº¿
+x2=hilbert(real(x1));  %x1çš„å¸Œå°”ä¼¯ç‰¹å˜æ¢x2 real(x1)
+x3=abs(x2);      %x2å–æ¨¡ï¼Œå¾—åˆ°x3
 x4 = - abs(hilbert(real(x1)));
 if (handle_arr(3) == 1)
     figure(4)
     plot(xtic,x3, xtic,x4);
-    title('Ê¹ÓÃÏ£¶û²®ÌØÖ®ºóÇóµÃµÃ°üÂç')
+    title('ä½¿ç”¨å¸Œå°”ä¼¯ç‰¹ä¹‹åæ±‚å¾—å¾—åŒ…ç»œ')
 end
 
 %%
-% ¼ÆËãÒô»ù³¤¶È
+% è®¡ç®—éŸ³åŸºé•¿åº¦
 if (handle_arr(6) == 1)
-    wlen=200;   % Ö¡³¤
-    inc=80;     % Ö¡ÒÆ
-    T1= vowel_end;    % ÉèÖÃ»ùÒô¶Ëµã¼ì²âµÄ²ÎÊı 0.05 ¶¯Ì¬²ÎÊı 0.5 1
-    [voiceseg,vosl,SF,Ef]=pitch_vad(Rt,wlen,inc,T1);   % »ùÒôµÄ¶Ëµã¼ì²â
+    wlen=200;   % å¸§é•¿
+    inc=80;     % å¸§ç§»
+    T1= vowel_end;    % è®¾ç½®åŸºéŸ³ç«¯ç‚¹æ£€æµ‹çš„å‚æ•° 0.05 åŠ¨æ€å‚æ•° 0.5 1
+    [voiceseg,vosl,SF,Ef]=pitch_vad(Rt,wlen,inc,T1);   % åŸºéŸ³çš„ç«¯ç‚¹æ£€æµ‹
     fn=length(SF);
-    time1 = (0 : length(Rt)-1)/Fs;                % ¼ÆËãÊ±¼ä×ø±ê
-    frameTime = FrameTimeC(fn, wlen, inc, Fs);  % ¼ÆËã¸÷Ö¡¶ÔÓ¦µÄÊ±¼ä×ø±ê
+    time1 = (0 : length(Rt)-1)/Fs;                % è®¡ç®—æ—¶é—´åæ ‡
+    frameTime = FrameTimeC(fn, wlen, inc, Fs);  % è®¡ç®—å„å¸§å¯¹åº”çš„æ—¶é—´åæ ‡
     figure(5);
     plot(time1,Rt,'k');  hold on;
-    title('ÓïÒôĞÅºÅÌáÈ¡'); axis([0 max(time1) -1 1]);
-    ylabel('·ùÖµ'); xlabel('Ê±¼ä/s');
+    title('è¯­éŸ³ä¿¡å·æå–'); axis([0 max(time1) -1 1]);
+    ylabel('å¹…å€¼'); xlabel('æ—¶é—´/s');
     Result_voice = 0;
 %     %%%%%
     if vosl > 2
         i_vosl_temp = vosl;
         remian_num = 3;
-        % È¡×îºóÁ½¸öÓïÒô¡£
+        % å–æœ€åä¸¤ä¸ªè¯­éŸ³ã€‚
         while(i_vosl_temp-remian_num>0)
             i_vosl_temp1 = i_vosl_temp-remian_num;
             voiceseg(i_vosl_temp1) = [];
@@ -116,13 +116,13 @@ if (handle_arr(6) == 1)
         vosl = vosl -1;           %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     end
     %%%%%
-    for k=1 : vosl    % ±ê³öÓĞ»°¶Î
+    for k=1 : vosl    % æ ‡å‡ºæœ‰è¯æ®µ
         nx1=voiceseg(k).begin;
         nx2=voiceseg(k).end;
-        nxl=voiceseg(k).duration; % Ô­Ê¼µÄÓïÒô³¤¶È
+        nxl=voiceseg(k).duration; % åŸå§‹çš„è¯­éŸ³é•¿åº¦
         voice_tmp = Rt(frameTime(nx1) * Fs: frameTime(nx2) * Fs);
         if (k==1)
-            Result_voice = voice_tmp; % Ê¹ÓÃ·½Ê½Result_voice{1,1}
+            Result_voice = voice_tmp; % ä½¿ç”¨æ–¹å¼Result_voice{1,1}
         else
             Result_voice = {Result_voice voice_tmp};
         end
@@ -131,43 +131,43 @@ if (handle_arr(6) == 1)
         line([frameTime(nx2) frameTime(nx2)],[-1 1],'color','b','linestyle','--');
     end
     
-    % ½«ÌáÈ¡µÄÓïÑÔ»æÖÆ³öÀ´¡£
+    % å°†æå–çš„è¯­è¨€ç»˜åˆ¶å‡ºæ¥ã€‚
     offline = 0;
     figure(6)
-    for i = 1:vosl  % Ôö¼ÓÁË441µÄ¼ä¸ô
+    for i = 1:vosl  % å¢åŠ äº†441çš„é—´éš”
         r_len = length(Result_voice{1,i});
         plot((0:441)/Fs + offline,zeros(442),'k');hold on;
         r_time = (0 : r_len-1)/Fs + offline + 441/Fs;
         plot(r_time, Result_voice{1,i});hold on;
         offline = max(r_time);
     end
-    title('»æÖÆÓïÒô¶Î');
-    ylabel('·ùÖµ'); xlabel('Ê±¼ä/s');
+    title('ç»˜åˆ¶è¯­éŸ³æ®µ');
+    ylabel('å¹…å€¼'); xlabel('æ—¶é—´/s');
 end
 
 %% 
-% ¼ÆËãÃ·¶ûµ¹Æ×ÏµÊı MFCC
+% è®¡ç®—æ¢…å°”å€’è°±ç³»æ•° MFCC
 if (handle_arr(5) == 1)
-    wlen=200; % Ö¡³¤
-    inc=80;  % Ö¡ÒÆ
-    num=8; %MelÂË²¨Æ÷¸öÊı
+    wlen=200; % å¸§é•¿
+    inc=80;  % å¸§ç§»
+    num=8; %Melæ»¤æ³¢å™¨ä¸ªæ•°
     AA = Rt; %Rt real(x1)
-    AA=AA/max(abs(AA)); % ·ùÖµ¹éÒ»»¯ 
+    AA=AA/max(abs(AA)); % å¹…å€¼å½’ä¸€åŒ– 
     time=(0:length(AA)-1)/Fs;
     ccc1=Nmfcc(AA,Fs,num,wlen,inc);
-    fn=size(ccc1,1)+4;  %Ç°ºó¸÷ÓĞÁ½Ö¡±»ÉáÆú ÕâÁ½Ö¡Ò»½×²î·Ö²ÎÊıÎª0
+    fn=size(ccc1,1)+4;  %å‰åå„æœ‰ä¸¤å¸§è¢«èˆå¼ƒ è¿™ä¸¤å¸§ä¸€é˜¶å·®åˆ†å‚æ•°ä¸º0
     cn=size(ccc1,2);
     z=zeros(1,cn);
     ccc2=[z;z;ccc1;z;z];
-    frameTime=FrameTimeC(fn,wlen,inc,Fs); % Çó³öÃ¿Ö¡¶ÔÓ¦µÄÊ±¼ä
+    frameTime=FrameTimeC(fn,wlen,inc,Fs); % æ±‚å‡ºæ¯å¸§å¯¹åº”çš„æ—¶é—´
     figure(105) ;
     ax105 = gca;
-    plot(ax105, frameTime,ccc2(:,1:cn));  % »­³öÃ¿Í¨µÀµÄMFCCÏµÊı  1:cn/2
-    title('(b)MFCCÏµÊı');
-    ylabel('·ùÖµ'); xlabel(['Ê±¼ä/s' ]);
-    figure(8); % ±ê³öÓĞ»°¶Î²¿·ÖµÄ MFCC ¡£ ================================================================
+    plot(ax105, frameTime,ccc2(:,1:cn));  % ç”»å‡ºæ¯é€šé“çš„MFCCç³»æ•°  1:cn/2
+    title('(b)MFCCç³»æ•°');
+    ylabel('å¹…å€¼'); xlabel(['æ—¶é—´/s' ]);
+    figure(8); % æ ‡å‡ºæœ‰è¯æ®µéƒ¨åˆ†çš„ MFCC ã€‚ ================================================================
     ccc2xue = cell(1,2);
-    for k=1 : vosl    % ±ê³öÓĞ»°¶Î
+    for k=1 : vosl    % æ ‡å‡ºæœ‰è¯æ®µ
         nx1=voiceseg(k).begin;
         nx2=voiceseg(k).end;
         line(ax105,[frameTime(nx1) frameTime(nx1)],[-10 10],'color','r','linestyle','-');
@@ -175,7 +175,7 @@ if (handle_arr(5) == 1)
         ax17_k = subplot(1,2,k);
         for i = 1:39    % 1:39
             tmpccc2xue = ccc2(:,i);           
-            if i==1   %»ñÈ¡ÓĞĞØÇ»Æğ·ü¶Î£¬ÓïÒôĞÅºÅµÄMFCC
+            if i==1   %è·å–æœ‰èƒ¸è…”èµ·ä¼æ®µï¼Œè¯­éŸ³ä¿¡å·çš„MFCC
                 ccc2xue{1,k} = tmpccc2xue(nx1:nx2);
             else
                 ccc2xue{1,k} = [ccc2xue{1,k} tmpccc2xue(nx1:nx2)];
@@ -394,17 +394,17 @@ if (handle_arr(7) == 1)
     
     %% Locate relate movement
     if( handle_esd(1) == 1)
-        wlen=200;   % Ö¡³¤
-        inc=80;     % Ö¡ÒÆ
-        y=enframe(Esd,wlen,inc)';    % ·ÖÖ¡
-        fn=size(y,2);                % ÇóÖ¡Êı
+        wlen=200;   % å¸§é•¿
+        inc=80;     % å¸§ç§»
+        y=enframe(Esd,wlen,inc)';    % åˆ†å¸§
+        fn=size(y,2);                % æ±‚å¸§æ•°
         Result_undulate = 0;
-        for k=1 : vosl               % ±ê³öÓĞ»°¶Î
+        for k=1 : vosl               % æ ‡å‡ºæœ‰è¯æ®µ
             nx1=voiceseg(k).begin;
             nx2=voiceseg(k).end;
             Undulate_tmp = rec(floor(frameTime(nx1) * EFs): ceil(frameTime(nx2) * EFs)); %ceil
             if (k==1)
-                Result_undulate = Undulate_tmp; % Ê¹ÓÃ·½Ê½Result_voice{1,1}
+                Result_undulate = Undulate_tmp; % ä½¿ç”¨æ–¹å¼Result_voice{1,1}
             else
                 Result_undulate = {Result_undulate Undulate_tmp};
             end
@@ -418,18 +418,18 @@ if (handle_arr(7) == 1)
     if( handle_esd(1) == 1)
         offline_undulate = 0;
         figure(15)
-        for i = 1:vosl  % Ôö¼ÓÁË441µÄ¼ä¸ô
+        for i = 1:vosl  % å¢åŠ äº†441çš„é—´éš”
             r_len_un = length(Result_undulate{1,i});
             r_time_un = (0 : r_len_un-1)/EFs + offline_undulate;
             plot(r_time_un, Result_undulate{1,i});hold on;
             offline_undulate = max(r_time_un);
         end
-        title('»æÖÆÆğ·ü¶Î');
-        ylabel('·ùÖµ'); xlabel('Ê±¼ä/s');
+        title('ç»˜åˆ¶èµ·ä¼æ®µ');
+        ylabel('å¹…å€¼'); xlabel('æ—¶é—´/s');
     end
 end
 
-%% ¼ÆËã xcor
+%% è®¡ç®— xcor
 if (handle_arr(8) == 1)
     %corrcoef xcorr crosscorr
     voiceCundualte1 = xcorr(Result_voice{1,1},Result_undulate{1,1},'none'); % Original cross-correlation calculation
@@ -443,44 +443,44 @@ if (handle_arr(8) == 1)
     subplot(1,2,2)
     plot(voiceCundualte2);
     %===========
-    cor_wlen=200; % Ö¡³¤
-    cor_inc=80;  % Ö¡ÒÆ
-    cor_num=8; %MelÂË²¨Æ÷¸öÊı
+    cor_wlen=200; % å¸§é•¿
+    cor_inc=80;  % å¸§ç§»
+    cor_num=8; %Melæ»¤æ³¢å™¨ä¸ªæ•°
     
     cor_AA1 = voiceCundualte1; 
     cor_AA2 = voiceCundualte2;
-    cor_AA1=cor_AA1/max(abs(cor_AA1)); % ·ùÖµ¹éÒ»»¯ 
-    cor_AA2=cor_AA2/max(abs(cor_AA2)); % ·ùÖµ¹éÒ»»¯ 
+    cor_AA1=cor_AA1/max(abs(cor_AA1)); % å¹…å€¼å½’ä¸€åŒ– 
+    cor_AA2=cor_AA2/max(abs(cor_AA2)); % å¹…å€¼å½’ä¸€åŒ– 
     cor_time1=(0:length(cor_AA1)-1)/Fs;
     cor_time2=(0:length(cor_AA2)-1)/Fs;
     cor1_ccc1=Nmfcc(cor_AA1,Fs,num,wlen,inc);
-    cor_fn1=size(cor1_ccc1,1)+4;  %Ç°ºó¸÷ÓĞÁ½Ö¡±»ÉáÆú
+    cor_fn1=size(cor1_ccc1,1)+4;  %å‰åå„æœ‰ä¸¤å¸§è¢«èˆå¼ƒ
     cor_cn1=size(cor1_ccc1,2);
     cor_z1=zeros(1,cor_cn1);
     cor1_ccc2=[cor_z1;cor_z1;cor1_ccc1;cor_z1;cor_z1];
     
     cor2_ccc1=Nmfcc(cor_AA2,Fs,num,wlen,inc);
-    cor_fn2=size(cor2_ccc1,1)+4;  %Ç°ºó¸÷ÓĞÁ½Ö¡±»ÉáÆú
+    cor_fn2=size(cor2_ccc1,1)+4;  %å‰åå„æœ‰ä¸¤å¸§è¢«èˆå¼ƒ
     cor_cn2=size(cor2_ccc1,2);
     cor_z2=zeros(1,cor_cn2);
     cor2_ccc2=[cor_z2;cor_z2;cor2_ccc1;cor_z2;cor_z2];
-    frameTime1=FrameTimeC(cor_fn1,wlen,inc,Fs); % Çó³öÃ¿Ö¡¶ÔÓ¦µÄÊ±¼ä
-    frameTime2=FrameTimeC(cor_fn2,wlen,inc,Fs); % Çó³öÃ¿Ö¡¶ÔÓ¦µÄÊ±¼ä
+    frameTime1=FrameTimeC(cor_fn1,wlen,inc,Fs); % æ±‚å‡ºæ¯å¸§å¯¹åº”çš„æ—¶é—´
+    frameTime2=FrameTimeC(cor_fn2,wlen,inc,Fs); % æ±‚å‡ºæ¯å¸§å¯¹åº”çš„æ—¶é—´
     figure(15) ;
     subplot(121);
-    plot(frameTime1,cor1_ccc2(:,1:cor_cn1))  % »­³öÃ¿Í¨µÀµÄMFCCÏµÊı  1:cor_cn1  =================1
-    title('(a)MFCCÏµÊı');
-    ylabel('·ùÖµ'); xlabel(['Ê±¼ä/s' ]);
+    plot(frameTime1,cor1_ccc2(:,1:cor_cn1))  % ç”»å‡ºæ¯é€šé“çš„MFCCç³»æ•°  1:cor_cn1  =================1
+    title('(a)MFCCç³»æ•°');
+    ylabel('å¹…å€¼'); xlabel(['æ—¶é—´/s' ]);
     subplot(122);
-    plot(frameTime2,cor2_ccc2(:,1:cor_cn2))  % »­³öÃ¿Í¨µÀµÄMFCCÏµÊı  1:cor_cn2  ==================1
-    title('(b)MFCCÏµÊı');
-    ylabel('·ùÖµ'); xlabel(['Ê±¼ä/s']);
+    plot(frameTime2,cor2_ccc2(:,1:cor_cn2))  % ç”»å‡ºæ¯é€šé“çš„MFCCç³»æ•°  1:cor_cn2  ==================1
+    title('(b)MFCCç³»æ•°');
+    ylabel('å¹…å€¼'); xlabel(['æ—¶é—´/s']);
     %===========
     HeySiri = [cor1_ccc2; cor2_ccc2];
 end
 
 %%
-% ¼ÆËã crosscor
+% è®¡ç®— crosscor
 if (handle_arr(9) == 1)
     [acor1,lag1] = crosscorr(Result_voice{1,1},Result_undulate{1,1});
     [acor2,lag2] = crosscorr(Result_voice{1,2},Result_undulate{1,2});
