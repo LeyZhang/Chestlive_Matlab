@@ -507,7 +507,7 @@ end
 %%
 % Store Data
 if (handle_arr(10) == 1)
-    path_store0  = '/Users/guanqianyun/Desktop/Processed_Data/standing/HeySiri';
+    path_store0  = '/Users/Desktop/Processed_Data/standing/HeySiri';
     path_store2 = '.mat';
     path_store_chest = sprintf('%s%d%s',path_store0,Data_number,path_store2);
     save(path_store_chest, 'cor1_ccc2',  'cor2_ccc2');
@@ -524,7 +524,7 @@ if (handle_arr(11) == 1)
 end
 % 
 % % Store ESD-PCA data
-% filename0 = '/Users/guanqianyun/Desktop/Processed_Data/GZ/ESD_pca';
+% filename0 = '/Users/Desktop/Processed_Data/GZ/ESD_pca';
 % filename2 = '.csv';
 % filename = sprintf('%s%d%s',filename0, Data_number,filename2);
 % fid = fopen(filename, 'w');
